@@ -42,5 +42,14 @@ describe('lib/operations/tables', () => {
   CONSTRAINT "my_table_name_pkey" PRIMARY KEY ("a", "b")
 );`);
     });
+
+    it('check schemas can be used for types', () => {
+      const sql = Tables.create()('my_table_name', {
+        a: { type: { schema: 's', name: 't' }, primaryKey: true },
+      });
+      expect(sql).to.equal(`CREATE TABLE "my_table_name" (
+  "a" "s"."t" PRIMARY KEY
+);`);
+    });
   });
 });
